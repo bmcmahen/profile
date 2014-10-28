@@ -1,0 +1,25 @@
+html
+  head
+  link(href='/styles.css', rel='stylesheet', type='text/css')
+  link(href='http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css', rel='stylesheet', type='text/css')
+  script(src="//use.typekit.net/job3khb.js")
+  script try{Typekit.load();}catch(e){}
+  meta(name="viewport", content="width=device-width, initial-scale=1")
+body(class=pageName)
+  nav.navigation
+    h5 <span>Ben</span>McMahen
+    ul
+      li
+        a(href='/') About
+      li
+        a(href='/projects') Projects
+      li
+        a(href='/words') Words
+  div.social.fade-in-up
+    a(href='https://twitter.com/@benmcmahen')
+      i.icon.ion-social-twitter
+    a(href='https://github.com/bmcmahen')
+      i.icon.ion-social-github
+  article
+    block content
+  script(src='/app.js')
