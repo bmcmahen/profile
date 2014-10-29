@@ -1,0 +1,94 @@
+<html><head></head><link href="/styles.css" rel="stylesheet" type="text/css"/><link href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css"/><script src="//use.typekit.net/job3khb.js"></script><script>try{Typekit.load();}catch(e){}</script><meta name="viewport" content="width=device-width, initial-scale=1"/></html><body class="blogPost"><nav class="navigation"><div class="page-nav"><a href="/" title="About Me"><i class="ion-ios7-home-outline"></i></a><a href="/blog" title="Blog"><i class="ion-ios7-paper-outline"></i></a><a href="/projects" title="Projects"><i class="ion-ios7-albums-outline"></i></a><a href="https://twitter.com/@benmcmahen" title="Twitter"><i class="icon ion-social-twitter-outline"></i></a><a href="https://github.com/bmcmahen" title="Github"><i class="icon ion-social-github-outline"></i></a></div><div class="social-nav"></div></nav><article><div class="entry grid"><a href="/blog" class="show-all"><i class="ion-ios7-arrow-left"></i><span>More Articles</span></a></div><div class="entry grid"><h1 class="title">Introducing the Eugenics Archive</h1><span class="meta">by, <a href='/'>Ben McMahen</a></span><div><p>As web applications become increasingly large and complex, we inevitably need tools to manage our client-side code. Instead of writing one huge script file, we want to be able to split up our code into multiple, distinct modules. We want to encourage code-reuse, and be able to easily import and add various dependencies to our projects -- whether a UI-component like a dropdown menu, or a DOM manipulation library like jQuery. And it&#39;s not just Javascript that we want to organize -- it&#39;s also the css, html templates, fonts, images, and other static resources that are part of any web application. Component provides a mechanism to do all of the above:</p>
+<ul>
+<li>organize your application around multiple, discrete modules</li>
+<li>easily import modules that others have published, to be used as dependencies.</li>
+<li>automatically combine all of your modules into a single javascript and css file for use at runtime.</li>
+</ul>
+<h2 id="structuring-your-application">Structuring your application</h2>
+<p>Our basic application structure involves three main parts: (1) a main <code>component.json</code> that defines where our modules are contained. (2) a directory containing those modules, and (3) a main <code>boot</code> module, which contains the logic for initially starting our application.</p>
+<pre><code>.
+|-- component.json
+|-- lib
+  |-- boot
+    |-- component.json
+    |-- index.js
+  |-- login
+    |-- component.json
+    |-- index.js
+    |-- index.css
+    |-- template.html
+</code></pre><p>Within our example application, we have our main <code>component.json</code> file which tells component to look within the <code>lib</code> path to find all of our modules. We have also defined a local dependency -- our <code>boot</code> module, which itself is a folder contained within our <code>lib</code> path.</p>
+<pre><code>{
+  &quot;name&quot;: &quot;myapp&quot;,
+  &quot;description&quot;: &quot;a simple app to demonstrate component&quot;,
+  &quot;paths&quot;: [&quot;lib&quot;],
+  &quot;local&quot;: [&quot;boot&quot;]
+}
+</code></pre><p>Our <code>boot</code> module defines the boot procedure for our application. It and all of the modules contained within <code>lib</code> are themselves components; that is, they contain their own <code>component.json</code> which defines their own dependencies, both local and external. Let&#39;s look at our boot&#39;s <code>component.json</code>.</p>
+<pre><code>{
+  &quot;name&quot;: &quot;boot&quot;,
+  &quot;description&quot;: &quot;start my app&quot;,
+  &quot;dependencies&quot;: {
+    &quot;bmcmahen/transit&quot;: &quot;*&quot;
+  },
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: [
+    &quot;index.js&quot;
+  ],
+  &quot;local&quot;: [
+    &quot;login&quot;
+  ]
+}
+</code></pre><p>This <code>boot</code> component looks much like any other component in our application. It has a name, description, and it defines all of our dependencies. The <code>dependencies</code> key defines external dependencies installed from github, such as <code>component/classes</code>, <code>bmcmahen/transit</code>, etc. The <code>local</code> key defines dependencies contained within your application -- in this case, our login component which we want to load when our application first boots. Let&#39;s take a look at our <code>index.js</code> file, which contains our boot procedure.</p>
+<pre><code>// import our external dependencies
+var router = require(&#39;transit&#39;);
+
+// import our local dependencies.
+require(&#39;login&#39;);
+
+// start our router
+router.listen(&#39;/&#39;);
+router.start();
+</code></pre><p>When our application boots, we want to import our router so that we can listen for URL changes. We also want to import our login module, which itself listens for the appropriate URL and renders a login form when requested. Again, our login module defines its own <code>component.json</code> file, with its own external and local dependencies, templates, styles, etc.</p>
+<pre><code>{
+  &quot;name&quot;: &quot;login&quot;,
+  &quot;description&quot;: &quot;login form&quot;,
+  &quot;dependencies&quot;: {
+    &quot;bmcmahen/transit&quot;: &quot;*&quot;
+  },
+  &quot;development&quot;: {},
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: [
+    &quot;index.js&quot;
+  ],
+  &quot;styles&quot;: [
+    &quot;login.css&quot;
+  ],
+  &quot;templates&quot;: [
+    &quot;template.html&quot;
+  ]
+}
+</code></pre><p>And our <code>index.js</code> file contains logic particular to this module.</p>
+<pre><code>var router = require(&#39;transit&#39;);
+
+// When the user goes to /login, we render
+// our login form.
+
+router(&#39;/login&#39;, function(){
+  // render our login form
+});
+</code></pre><h2 id="building-the-application">Building the Application</h2>
+<p>Finally, we need to actually install all of our external dependencies and build our application into parts that we can easily serve alongside our html document. Navigate to your application folder where root <code>component.json</code> file is contained. Use the <code>component</code> command-line tools to install all of the dependencies for your entire application.</p>
+<pre><code>$ component install
+</code></pre><p>When installation finishes, you need to build the files that will be served to the client. Again, in the terminal:</p>
+<pre><code>$ component build
+</code></pre><p>This create a single <code>build.js</code> and <code>build.css</code> file within the <code>build</code> folder. You need to attach these to the HTML documents that you intend to serve to the user. At the end of your HTML file, import <code>build.js</code> and require the boot module to initiate the booting procedure.</p>
+<pre><code>&lt;html&gt;
+&lt;head&gt;
+ &lt;link href=&#39;build/build.css&#39; rel=&#39;stylesheet&#39;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+ &lt;script src=&#39;build/build.js&#39;&gt;&lt;/script&gt;
+ &lt;script&gt; require(&#39;boot&#39;); &lt;/script&gt;
+&lt;/body&gt;
+</code></pre></div></div></article><script src="/app.js"></script></body>

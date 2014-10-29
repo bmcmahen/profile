@@ -1,0 +1,11 @@
+extends ./layout.jade
+
+block content
+  .entry.grid
+    a.show-all(href='/blog')
+      i.ion-ios7-arrow-left
+      span More Articles
+  .entry.grid
+    h1.title!=title
+    span.meta by, <a href='/'>Ben McMahen</a>
+    div!=contents

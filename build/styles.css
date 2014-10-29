@@ -388,7 +388,6 @@ a:hover {
 }
 
 nav.navigation {
-  position: absolute;
   z-index: 5;
   width: 100%;
   text-align: center;
@@ -742,7 +741,7 @@ h3 {
   z-index: 10;
   -webkit-transition-delay: 0.3s;
   transition-delay: 0.3s;
-  padding-top: 100px;
+  padding-top: 50px;
 }
 
 .show-projects .about-me {
@@ -757,7 +756,7 @@ h3 {
 }
 
 .projects-page {
-  padding-top: 100px;
+  padding-top: 50px;
 }
 
 img {
@@ -905,4 +904,75 @@ i.ion-ios7-arrow-left {
 
 .title a {
   background: none;
+}
+
+.entry > div {
+  padding: 10px 25px;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.entry.grid {
+  margin-top: 35px;
+  max-width: 850px;
+}
+
+h1 {
+  color: #333;
+  font-size: 35px;
+  font-weight: 500;
+}
+
+.entry p,
+.entry ul li {
+  font-family: georgia;
+  line-height: 34px;
+  font-size: 20px;
+  color: rgba(0,0,0,0.8);
+}
+
+h2 {
+  font-weight: 500;
+  font-style: italic;
+  margin-top: 35px;
+}
+
+pre {
+  padding: 15px;
+  background: whitesmoke;
+}
+
+h1.title {
+  color: #333;
+  font-size: 40px;
+  font-weight: 500;
+  background: rgba(238, 255, 118, 0.8);
+  margin-bottom: 10px;
+  text-transform: lowercase;
+  display: inline-block;
+  padding: 0 5px;
+  letter-spacing: 3px;
+  text-align: left;
+  margin-top: 10px;
+}
+
+span.meta {
+  margin-left: 10px;
+  color: white;
+  padding: 0 5px;
+  background: rgb(43, 43, 43);
+}
+
+span.meta a {
+  color: white;
+  background: none;
+}
+
+a.show-all {
+  text-transform: lowercase;
+  background: none;
+  font-weight: 400;
+  padding: 5px;
+  line-height: 12px;
+  display: inline-block;
+  margin-top: 45px;
 }
