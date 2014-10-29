@@ -11,7 +11,7 @@ var ignore = require('metalsmith-ignore');
 var duo = require('duo');
 var jade = require('duo-jade');
 
-var watcher = sane('.');
+var watcher = sane('src');
 
 watcher.on('change', buildProject);
 

@@ -1,0 +1,10 @@
+/node_modules
+/components
+/build
+
+test/*.js
+test/*.css
+
+# root level development temp files
+/?.html
+/?.js

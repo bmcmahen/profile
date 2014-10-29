@@ -1,17 +1,33 @@
-var page = require('visionmedia/page.js');
-var onload = require('component/onload');
+// var page = require('visionmedia/page.js');
+// var onload = require('component/onload');
 
-page('/', function () {
-  document.body.classList.remove('show-projects');
-});
+// page('/', function () {
+//   document.body.classList.remove('show-projects');
+// });
+//
+// page('/projects', function (ctx, next) {
+//   document.body.classList.add('show-projects');
+// });
+//
+// page();
+//
+//
+// setTimeout(function () {
+//   document.body.classList.add('fully-loaded');
+// }, 10000);
 
-page('/projects', function (ctx, next) {
-  document.body.classList.add('show-projects');
-});
+var Tip = require('component/tip');
 
-page();
+var els = document.querySelectorAll('a[title]');
 
+for(var i = 0, el; el = els[i]; i++) {
+  var val = el.getAttribute('title');
+  var tip = new Tip(val, { delay: 1});
+  el.setAttribute('title', '');
+  tip.cancelHideOnHover();
+  tip.attach(el);
+  tip.effect('fade');
 
-setTimeout(function () {
-  document.body.classList.add('fully-loaded');
-}, 10000);
+}
+
+tip('a[title]', { delay: 0});

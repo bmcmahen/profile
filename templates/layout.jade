@@ -7,19 +7,18 @@ html
   meta(name="viewport", content="width=device-width, initial-scale=1")
 body(class=pageName)
   nav.navigation
-    h5 <span>Ben</span>McMahen
-    ul
-      li
-        a(href='/') About
-      li
-        a(href='/projects') Projects
-      li
-        a(href='/words') Words
-  div.social.fade-in-slow
-    a(href='https://twitter.com/@benmcmahen')
-      i.icon.ion-social-twitter
-    a(href='https://github.com/bmcmahen')
-      i.icon.ion-social-github
+    .page-nav
+      a.ben(href='/', title='About Me')
+      a(href='/blog', title='Blog')
+        i.ion-ios7-paper
+      a(href='/projects', title='Projects')
+        i.ion-ios7-albums
+      a(href='https://twitter.com/@benmcmahen', title='Twitter')
+        i.icon.ion-social-twitter
+      a(href='https://github.com/bmcmahen', title='Github')
+        i.icon.ion-social-github
+    .social-nav
+
   article
     block content
   script(src='/app.js')

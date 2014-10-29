@@ -1,0 +1,27 @@
+{
+  "name": "component-classes",
+  "version": "1.2.1",
+  "description": "Cross-browser element class list",
+  "keywords": [
+    "dom",
+    "html",
+    "classList",
+    "class",
+    "ui"
+  ],
+  "dependencies": {
+    "component-indexof": "*"
+  },
+  "browser": {
+    "indexof": "component-indexof"
+  },
+  "component": {
+    "scripts": {
+      "classes/index.js": "index.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/component/classes.git"
+  }
+}

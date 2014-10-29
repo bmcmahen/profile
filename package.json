@@ -1,6 +1,6 @@
 {
   "name": "profile",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "my personal website",
   "dependencies": {
     "duo": "^0.8.8",
