@@ -2,8 +2,8 @@
   "app.js": {
     "id": "app.js",
     "type": "js",
-    "mtime": 1414564180000,
-    "src": "// var page = require('visionmedia/page.js');\n// var onload = require('component/onload');\n\n// page('/', function () {\n//   document.body.classList.remove('show-projects');\n// });\n//\n// page('/projects', function (ctx, next) {\n//   document.body.classList.add('show-projects');\n// });\n//\n// page();\n//\n//\n// setTimeout(function () {\n//   document.body.classList.add('fully-loaded');\n// }, 10000);\n\nvar Tip = require('component/tip');\n\nvar els = document.querySelectorAll('a[title]');\n\nfor(var i = 0, el; el = els[i]; i++) {\n  var val = el.getAttribute('title');\n  var tip = new Tip(val, { delay: 1});\n  el.setAttribute('title', '');\n  tip.cancelHideOnHover();\n  tip.attach(el);\n  tip.effect('fade');\n\n}\n\ntip('a[title]', { delay: 0});\n",
+    "mtime": 1414609315000,
+    "src": "// var page = require('visionmedia/page.js');\n// var onload = require('component/onload');\n\n// page('/', function () {\n//   document.body.classList.remove('show-projects');\n// });\n//\n// page('/projects', function (ctx, next) {\n//   document.body.classList.add('show-projects');\n// });\n//\n// page();\n//\n//\n// setTimeout(function () {\n//   document.body.classList.add('fully-loaded');\n// }, 10000);\n\nvar Tip = require('component/tip');\n\nvar els = document.querySelectorAll('a[title]');\n\nfor(var i = 0, el; el = els[i]; i++) {\n  var val = el.getAttribute('title');\n  var tip = new Tip(val, { delay: 1});\n  el.setAttribute('title', '');\n  tip.cancelHideOnHover();\n  tip.position('bottom');\n  tip.attach(el);\n  tip.effect('fade');\n\n}\n",
     "deps": {
       "component/tip": "components/component-tip@2.1.2/index.js"
     },

@@ -10,6 +10,7 @@ var sane = require('sane');
 var ignore = require('metalsmith-ignore');
 var duo = require('duo');
 var jade = require('duo-jade');
+var metallic = require('metalsmith-metallic');
 
 var watcher = sane('src');
 
@@ -33,6 +34,7 @@ function buildProject() {
         reverse: true
       }
     }))
+    .use(metallic())
     .use(markdown())
     .use(permalinks(':title'))
     .use(templates('jade'))

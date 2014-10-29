@@ -9,6 +9,16 @@ As web applications become increasingly large and complex, we inevitably need to
   - easily import modules that others have published, to be used as dependencies.
   - automatically combine all of your modules into a single javascript and css file for use at runtime.
 
+```javascript
+var ben = 'a human of some sort';
+
+function doGood(because) {
+  if (because === 'you should') {
+    alert('okay');
+  }
+}
+```
+
 ## Structuring your application
 
 Our basic application structure involves three main parts: (1) a main `component.json` that defines where our modules are contained. (2) a directory containing those modules, and (3) a main `boot` module, which contains the logic for initially starting our application.

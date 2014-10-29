@@ -25,9 +25,8 @@ for(var i = 0, el; el = els[i]; i++) {
   var tip = new Tip(val, { delay: 1});
   el.setAttribute('title', '');
   tip.cancelHideOnHover();
+  tip.position('bottom');
   tip.attach(el);
   tip.effect('fade');
 
 }
-
-tip('a[title]', { delay: 0});

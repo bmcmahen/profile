@@ -417,9 +417,9 @@ nav a:hover i {
 }
 
 nav a i {
-  font-size: 30px;
+  font-size: 35px;
   text-shadow: none;
-  color: #333;
+  color: rgba(54, 54, 54, 0.75);
 }
 
 nav .page-nav a {
@@ -800,7 +800,7 @@ padding: 5px;
   background: none;
 }
 
-.entry > div {
+.entry .contents {
 padding: 10px 25px;
 background: rgba(255, 255, 255, 0.95);
 }
@@ -818,7 +818,7 @@ font-weight: 500;
 
 .entry p,
 .entry ul li {
-font-family: georgia;
+font-family: ff-meta-serif-web-pro, georgia, serif;
 line-height: 34px;
 font-size: 20px;
 color: rgba(0,0,0,0.8);
@@ -842,10 +842,11 @@ h1.title {
   background: rgba(238, 255, 118, 0.8);
   margin-bottom: 10px;
   text-transform: lowercase;
-  display: inline-block;
+  display: inline;
   padding: 0 5px;
   letter-spacing: 3px;
   text-align: left;
+  line-height: 55px;
   margin-top: 10px;
 }
 
@@ -862,11 +863,75 @@ span.meta a {
 }
 
 a.show-all {
-  text-transform: lowercase;
-  background: none;
-  font-weight: 400;
-  padding: 5px;
-  line-height: 12px;
-  display: inline-block;
-  margin-top: 45px;
+text-transform: lowercase;
+background: none;
+font-weight: 400;
+padding: 15px 0;
+line-height: 12px;
+display: inline-block;
+margin-top: 45px;
+letter-spacing: 3px;
+}
+
+.footer-meta hr {
+width: 300px;
+margin-top: 35px;
+text-align: left;
+margin-left: 0;
+border: none;
+border-bottom: 1px solid rgba(0,0,0,0.3);
+}
+
+.footer-meta {
+padding-bottom: 35px;
+}
+
+.footer-meta p {
+  font-family: futura-pt, helvetica, sans-serif;
+  font-style: italic;
+}
+
+.top-image {
+  background-image: url(/images/trees.jpg);
+  background-size: cover;
+  background-position: 50%;
+  height: 350px;
+  position: relative;
+}
+
+.top-image .top-meta {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding-left: 10px;
+  padding-bottom: 5px;
+  width: 100%;
+}
+
+.top-image:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.55));
+}
+
+code {
+  font-size: 17px;
+}
+
+.brand a {
+font-size: 30px;
+letter-spacing: 2px;
+margin-top: 15px;
+}
+
+.brand a:hover {
+  color: #333;
+}
+
+.brand span {
+  color: #E10E0E;
 }

@@ -2,22 +2,25 @@ html
   head
   link(href='/styles.css', rel='stylesheet', type='text/css')
   link(href='http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css', rel='stylesheet', type='text/css')
+  link(rel="stylesheet", href="http://yandex.st/highlightjs/8.0/styles/default.min.css")
   script(src="//use.typekit.net/job3khb.js")
   script try{Typekit.load();}catch(e){}
   meta(name="viewport", content="width=device-width, initial-scale=1")
 body(class=pageName)
   nav.navigation
+    .brand
+      a(href='/')<span>ben</span>mcmahen
     .page-nav
-      a(href='/', title='About Me')
-        i.ion-ios7-home-outline
+      a(href='/', title='About Ben')
+        i.ion-ios7-home
       a(href='/blog', title='Blog')
-        i.ion-ios7-paper-outline
+        i.ion-ios7-paper
       a(href='/projects', title='Projects')
-        i.ion-ios7-albums-outline
-      a(href='https://twitter.com/@benmcmahen', title='Twitter')
-        i.icon.ion-social-twitter-outline
-      a(href='https://github.com/bmcmahen', title='Github')
-        i.icon.ion-social-github-outline
+        i.ion-ios7-albums
+      a(href='https://twitter.com/@benmcmahen', title='Ben on Twitter')
+        i.icon.ion-social-twitter
+      a(href='https://github.com/bmcmahen', title='Ben on Github')
+        i.icon.ion-social-github
     .social-nav
 
   article
