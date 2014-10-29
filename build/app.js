@@ -91,11 +91,15 @@ page('/', function () {
 });
 
 page('/projects', function (ctx, next) {
-  console.log('show projects');
   document.body.classList.add('show-projects');
 });
 
 page();
+
+
+setTimeout(function () {
+  document.body.classList.add('fully-loaded');
+}, 10000);
 
 }, {"visionmedia/page.js":2,"component/onload":3}],
 2: [function(require, module, exports) {

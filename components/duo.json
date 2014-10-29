@@ -2,8 +2,8 @@
   "app.js": {
     "id": "app.js",
     "type": "js",
-    "mtime": 1414515349000,
-    "src": "var page = require('visionmedia/page.js');\nvar onload = require('component/onload');\n\npage('/', function () {\n  document.body.classList.remove('show-projects');\n});\n\npage('/projects', function (ctx, next) {\n  console.log('show projects');\n  document.body.classList.add('show-projects');\n});\n\npage();\n",
+    "mtime": 1414544553000,
+    "src": "var page = require('visionmedia/page.js');\nvar onload = require('component/onload');\n\npage('/', function () {\n  document.body.classList.remove('show-projects');\n});\n\npage('/projects', function (ctx, next) {\n  document.body.classList.add('show-projects');\n});\n\npage();\n\n\nsetTimeout(function () {\n  document.body.classList.add('fully-loaded');\n}, 10000);\n",
     "deps": {
       "visionmedia/page.js": "components/visionmedia-page.js@1.3.7/index.js",
       "component/onload": "components/component-onload@0.1.0/index.js"
