@@ -2,10 +2,12 @@
   "app.js": {
     "id": "app.js",
     "type": "js",
-    "mtime": 1414609315000,
-    "src": "// var page = require('visionmedia/page.js');\n// var onload = require('component/onload');\n\n// page('/', function () {\n//   document.body.classList.remove('show-projects');\n// });\n//\n// page('/projects', function (ctx, next) {\n//   document.body.classList.add('show-projects');\n// });\n//\n// page();\n//\n//\n// setTimeout(function () {\n//   document.body.classList.add('fully-loaded');\n// }, 10000);\n\nvar Tip = require('component/tip');\n\nvar els = document.querySelectorAll('a[title]');\n\nfor(var i = 0, el; el = els[i]; i++) {\n  var val = el.getAttribute('title');\n  var tip = new Tip(val, { delay: 1});\n  el.setAttribute('title', '');\n  tip.cancelHideOnHover();\n  tip.position('bottom');\n  tip.attach(el);\n  tip.effect('fade');\n\n}\n",
+    "mtime": 1414637761000,
+    "src": "// var page = require('visionmedia/page.js');\n// var onload = require('component/onload');\n\n// page('/', function () {\n//   document.body.classList.remove('show-projects');\n// });\n//\n// page('/projects', function (ctx, next) {\n//   document.body.classList.add('show-projects');\n// });\n//\n// page();\n//\n//\n// setTimeout(function () {\n//   document.body.classList.add('fully-loaded');\n// }, 10000);\n\nvar Tip = require('component/tip');\nvar throttle = require('component/per-frame');\nvar linearConversion = require('bmcmahen/linear-conversion');\n\nvar els = document.querySelectorAll('a[title]');\n\nfor(var i = 0, el; el = els[i]; i++) {\n  var val = el.getAttribute('title');\n  var tip = new Tip(val, { delay: 1});\n  el.setAttribute('title', '');\n  tip.cancelHideOnHover();\n  tip.position('bottom');\n  tip.attach(el);\n  tip.effect('fade');\n}\n\nvar header = document.querySelector('.navigation');\nif (!header) return;\n\nvar conversion = linearConversion([0, 200], [1, 0.8]);\nvar scaleConversion = linearConversion([0, 200], [1, 0.8]);\nvar translateConversion = linearConversion([0, 200], [0, -70]);\nwindow.addEventListener('scroll', throttle(onscroll), false);\n\nfunction onscroll() {\n  var top = window.scrollY || document.documentElement.scrollTop;\n  // var opacity = conversion(top);\n  // if (opacity < 0) opacity = 0;\n  // if (opacity > 1) opacity = 1;\n  // header.style.opacity = opacity;\n  var pos = translateConversion(top);\n  if (pos > 0) pos = 0;\n  if (pos < -150) pos = -150;\n  header.style.transform = 'translateY('+ pos + 'px)';\n  // scale('+ scaleConversion(top) + ')\n}\n\nonscroll();\n",
     "deps": {
-      "component/tip": "components/component-tip@2.1.2/index.js"
+      "component/tip": "components/component-tip@2.1.2/index.js",
+      "component/per-frame": "components/component-per-frame@3.0.0/index.js",
+      "bmcmahen/linear-conversion": "components/bmcmahen-linear-conversion@0.0.1/index.js"
     },
     "entry": true
   },
@@ -389,6 +391,29 @@
     "type": "js",
     "mtime": 1396149195000,
     "src": "/**\n * Global Names\n */\n\nvar globals = /\\b(this|Array|Date|Object|Math|JSON)\\b/g;\n\n/**\n * Return immediate identifiers parsed from `str`.\n *\n * @param {String} str\n * @param {String|Function} map function or prefix\n * @return {Array}\n * @api public\n */\n\nmodule.exports = function(str, fn){\n  var p = unique(props(str));\n  if (fn && 'string' == typeof fn) fn = prefixed(fn);\n  if (fn) return map(str, p, fn);\n  return p;\n};\n\n/**\n * Return immediate identifiers in `str`.\n *\n * @param {String} str\n * @return {Array}\n * @api private\n */\n\nfunction props(str) {\n  return str\n    .replace(/\\.\\w+|\\w+ *\\(|\"[^\"]*\"|'[^']*'|\\/([^/]+)\\//g, '')\n    .replace(globals, '')\n    .match(/[$a-zA-Z_]\\w*/g)\n    || [];\n}\n\n/**\n * Return `str` with `props` mapped with `fn`.\n *\n * @param {String} str\n * @param {Array} props\n * @param {Function} fn\n * @return {String}\n * @api private\n */\n\nfunction map(str, props, fn) {\n  var re = /\\.\\w+|\\w+ *\\(|\"[^\"]*\"|'[^']*'|\\/([^/]+)\\/|[a-zA-Z_]\\w*/g;\n  return str.replace(re, function(_){\n    if ('(' == _[_.length - 1]) return fn(_);\n    if (!~props.indexOf(_)) return _;\n    return fn(_);\n  });\n}\n\n/**\n * Return unique array.\n *\n * @param {Array} arr\n * @return {Array}\n * @api private\n */\n\nfunction unique(arr) {\n  var ret = [];\n\n  for (var i = 0; i < arr.length; i++) {\n    if (~ret.indexOf(arr[i])) continue;\n    ret.push(arr[i]);\n  }\n\n  return ret;\n}\n\n/**\n * Map with prefix `str`.\n */\n\nfunction prefixed(str) {\n  return function(_){\n    return str + _;\n  };\n}\n",
+    "deps": {}
+  },
+  "components/bmcmahen-linear-conversion@0.0.1/index.js": {
+    "id": "components/bmcmahen-linear-conversion@0.0.1/index.js",
+    "type": "js",
+    "mtime": 1368137079000,
+    "src": "module.exports = function linearConversion(a, b){\n  var o = a[1] - a[0]\n    , n = b[1] - b[0];\n\n  return function(x){\n    return (((x - a[0]) * n) / o) + b[0];\n  };\n};",
+    "deps": {}
+  },
+  "components/component-per-frame@3.0.0/index.js": {
+    "id": "components/component-per-frame@3.0.0/index.js",
+    "type": "js",
+    "mtime": 1411596701000,
+    "src": "/**\n * Module Dependencies.\n */\n\nvar raf = require('raf');\n\n/**\n * Export `throttle`.\n */\n\nmodule.exports = throttle;\n\n/**\n * Executes a function at most once per animation frame. Kind of like\n * throttle, but it throttles at ~60Hz.\n *\n * @param {Function} fn - the Function to throttle once per animation frame\n * @return {Function}\n * @public\n */\n\nfunction throttle(fn) {\n  var rtn;\n  var ignoring = false;\n\n  return function queue() {\n    if (ignoring) return rtn;\n    ignoring = true;\n\n    raf(function() {\n      ignoring = false;\n    });\n\n    rtn = fn.apply(this, arguments);\n    return rtn;\n  };\n}\n",
+    "deps": {
+      "raf": "components/component-raf@1.1.3/index.js"
+    }
+  },
+  "components/component-raf@1.1.3/index.js": {
+    "id": "components/component-raf@1.1.3/index.js",
+    "type": "js",
+    "mtime": 1392146672000,
+    "src": "/**\n * Expose `requestAnimationFrame()`.\n */\n\nexports = module.exports = window.requestAnimationFrame\n  || window.webkitRequestAnimationFrame\n  || window.mozRequestAnimationFrame\n  || window.oRequestAnimationFrame\n  || window.msRequestAnimationFrame\n  || fallback;\n\n/**\n * Fallback implementation.\n */\n\nvar prev = new Date().getTime();\nfunction fallback(fn) {\n  var curr = new Date().getTime();\n  var ms = Math.max(0, 16 - (curr - prev));\n  var req = setTimeout(fn, ms);\n  prev = curr;\n  return req;\n}\n\n/**\n * Cancel.\n */\n\nvar cancel = window.cancelAnimationFrame\n  || window.webkitCancelAnimationFrame\n  || window.mozCancelAnimationFrame\n  || window.oCancelAnimationFrame\n  || window.msCancelAnimationFrame\n  || window.clearTimeout;\n\nexports.cancel = function(id){\n  cancel.call(window, id);\n};\n",
     "deps": {}
   }
 }

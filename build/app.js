@@ -102,6 +102,8 @@
 // }, 10000);
 
 var Tip = require('component/tip');
+var throttle = require('component/per-frame');
+var linearConversion = require('bmcmahen/linear-conversion');
 
 var els = document.querySelectorAll('a[title]');
 
@@ -113,10 +115,32 @@ for(var i = 0, el; el = els[i]; i++) {
   tip.position('bottom');
   tip.attach(el);
   tip.effect('fade');
-
 }
 
-}, {"component/tip":2}],
+var header = document.querySelector('.navigation');
+if (!header) return;
+
+var conversion = linearConversion([0, 200], [1, 0.8]);
+var scaleConversion = linearConversion([0, 200], [1, 0.8]);
+var translateConversion = linearConversion([0, 200], [0, -70]);
+window.addEventListener('scroll', throttle(onscroll), false);
+
+function onscroll() {
+  var top = window.scrollY || document.documentElement.scrollTop;
+  // var opacity = conversion(top);
+  // if (opacity < 0) opacity = 0;
+  // if (opacity > 1) opacity = 1;
+  // header.style.opacity = opacity;
+  var pos = translateConversion(top);
+  if (pos > 0) pos = 0;
+  if (pos < -150) pos = -150;
+  header.style.transform = 'translateY('+ pos + 'px)';
+  // scale('+ scaleConversion(top) + ')
+}
+
+onscroll();
+
+}, {"component/tip":2,"component/per-frame":3,"bmcmahen/linear-conversion":4}],
 2: [function(require, module, exports) {
 /**
  * Module dependencies.
@@ -569,8 +593,8 @@ function dimensions(node) {
   return dims;
 }
 
-}, {"bind":3,"emitter":4,"events":5,"query":6,"domify":7,"classes":8,"css":9,"./template.html":10,"offset":11}],
-3: [function(require, module, exports) {
+}, {"bind":5,"emitter":6,"events":7,"query":8,"domify":9,"classes":10,"css":11,"./template.html":12,"offset":13}],
+5: [function(require, module, exports) {
 /**
  * Slice reference.
  */
@@ -596,7 +620,7 @@ module.exports = function(obj, fn){
 };
 
 }, {}],
-4: [function(require, module, exports) {
+6: [function(require, module, exports) {
 
 /**
  * Expose `Emitter`.
@@ -763,7 +787,7 @@ Emitter.prototype.hasListeners = function(event){
 };
 
 }, {}],
-5: [function(require, module, exports) {
+7: [function(require, module, exports) {
 
 /**
  * Module dependencies.
@@ -941,8 +965,8 @@ function parse(event) {
   }
 }
 
-}, {"event":12,"delegate":13}],
-12: [function(require, module, exports) {
+}, {"event":14,"delegate":15}],
+14: [function(require, module, exports) {
 var bind = window.addEventListener ? 'addEventListener' : 'attachEvent',
     unbind = window.removeEventListener ? 'removeEventListener' : 'detachEvent',
     prefix = bind !== 'addEventListener' ? 'on' : '';
@@ -979,7 +1003,7 @@ exports.unbind = function(el, type, fn, capture){
   return fn;
 };
 }, {}],
-13: [function(require, module, exports) {
+15: [function(require, module, exports) {
 /**
  * Module dependencies.
  */
@@ -1023,8 +1047,8 @@ exports.unbind = function(el, type, fn, capture){
   event.unbind(el, type, fn, capture);
 };
 
-}, {"closest":14,"event":12}],
-14: [function(require, module, exports) {
+}, {"closest":16,"event":14}],
+16: [function(require, module, exports) {
 var matches = require('matches-selector')
 
 module.exports = function (element, selector, checkYoSelf, root) {
@@ -1045,8 +1069,8 @@ module.exports = function (element, selector, checkYoSelf, root) {
   }
 }
 
-}, {"matches-selector":15}],
-15: [function(require, module, exports) {
+}, {"matches-selector":17}],
+17: [function(require, module, exports) {
 /**
  * Module dependencies.
  */
@@ -1094,8 +1118,8 @@ function match(el, selector) {
   return false;
 }
 
-}, {"query":6}],
-6: [function(require, module, exports) {
+}, {"query":8}],
+8: [function(require, module, exports) {
 function one(selector, el) {
   return el.querySelector(selector);
 }
@@ -1119,7 +1143,7 @@ exports.engine = function(obj){
 };
 
 }, {}],
-7: [function(require, module, exports) {
+9: [function(require, module, exports) {
 
 /**
  * Expose `parse`.
@@ -1215,7 +1239,7 @@ function parse(html, doc) {
 }
 
 }, {}],
-8: [function(require, module, exports) {
+10: [function(require, module, exports) {
 /**
  * Module dependencies.
  */
@@ -1401,8 +1425,8 @@ ClassList.prototype.contains = function(name){
     : !! ~index(this.array(), name);
 };
 
-}, {"indexof":16}],
-16: [function(require, module, exports) {
+}, {"indexof":18}],
+18: [function(require, module, exports) {
 module.exports = function(arr, obj){
   if (arr.indexOf) return arr.indexOf(obj);
   for (var i = 0; i < arr.length; ++i) {
@@ -1411,7 +1435,7 @@ module.exports = function(arr, obj){
   return -1;
 };
 }, {}],
-9: [function(require, module, exports) {
+11: [function(require, module, exports) {
 /**
  * Module Dependencies
  */
@@ -1471,8 +1495,8 @@ function setStyles(el, props) {
   return el;
 }
 
-}, {"debug":17,"./lib/style":18,"./lib/css":19}],
-17: [function(require, module, exports) {
+}, {"debug":19,"./lib/style":20,"./lib/css":21}],
+19: [function(require, module, exports) {
 
 /**
  * This is the web browser implementation of `debug()`.
@@ -1621,8 +1645,8 @@ function load() {
 
 exports.enable(load());
 
-}, {"./debug":20}],
-20: [function(require, module, exports) {
+}, {"./debug":22}],
+22: [function(require, module, exports) {
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -1821,8 +1845,8 @@ function coerce(val) {
   return val;
 }
 
-}, {"ms":21}],
-21: [function(require, module, exports) {
+}, {"ms":23}],
+23: [function(require, module, exports) {
 /**
  * Helpers.
  */
@@ -1936,7 +1960,7 @@ function plural(ms, n, name) {
 }
 
 }, {}],
-18: [function(require, module, exports) {
+20: [function(require, module, exports) {
 /**
  * Module Dependencies
  */
@@ -2044,8 +2068,8 @@ function get(el, prop, orig, extra) {
   return ret;
 }
 
-}, {"debug":17,"to-camel-case":22,"./support":23,"./prop":24,"./hooks":25}],
-22: [function(require, module, exports) {
+}, {"debug":19,"to-camel-case":24,"./support":25,"./prop":26,"./hooks":27}],
+24: [function(require, module, exports) {
 
 var toSpace = require('to-space-case');
 
@@ -2070,8 +2094,8 @@ function toCamelCase (string) {
     return letter.toUpperCase();
   });
 }
-}, {"to-space-case":26}],
-26: [function(require, module, exports) {
+}, {"to-space-case":28}],
+28: [function(require, module, exports) {
 
 var clean = require('to-no-case');
 
@@ -2096,8 +2120,8 @@ function toSpaceCase (string) {
     return match ? ' ' + match : '';
   });
 }
-}, {"to-no-case":27}],
-27: [function(require, module, exports) {
+}, {"to-no-case":29}],
+29: [function(require, module, exports) {
 
 /**
  * Expose `toNoCase`.
@@ -2173,7 +2197,7 @@ function uncamelize (string) {
   });
 }
 }, {}],
-23: [function(require, module, exports) {
+25: [function(require, module, exports) {
 /**
  * Support values
  */
@@ -2277,7 +2301,7 @@ function computePixelPositionAndBoxSizingReliable() {
 
 
 }, {}],
-24: [function(require, module, exports) {
+26: [function(require, module, exports) {
 /**
  * Module dependencies
  */
@@ -2315,8 +2339,8 @@ function prop(prop, style) {
   return prop;
 }
 
-}, {"debug":17,"to-camel-case":22,"./vendor":28}],
-28: [function(require, module, exports) {
+}, {"debug":19,"to-camel-case":24,"./vendor":30}],
+30: [function(require, module, exports) {
 /**
  * Module Dependencies
  */
@@ -2355,7 +2379,7 @@ function vendor(prop, style) {
 }
 
 }, {}],
-25: [function(require, module, exports) {
+27: [function(require, module, exports) {
 /**
  * Module Dependencies
  */
@@ -2519,8 +2543,8 @@ function augmentWidthOrHeight(el, prop, extra, isBorderBox, styles) {
   return val;
 }
 
-}, {"each":29,"./css":19,"./styles":30,"./support":23,"./swap":31,"./computed":32}],
-29: [function(require, module, exports) {
+}, {"each":31,"./css":21,"./styles":32,"./support":25,"./swap":33,"./computed":34}],
+31: [function(require, module, exports) {
 
 /**
  * Module dependencies.
@@ -2611,8 +2635,8 @@ function array(obj, fn, ctx) {
   }
 }
 
-}, {"type":33,"component-type":33,"to-function":34}],
-33: [function(require, module, exports) {
+}, {"type":35,"component-type":35,"to-function":36}],
+35: [function(require, module, exports) {
 
 /**
  * toString ref.
@@ -2647,7 +2671,7 @@ module.exports = function(val){
 };
 
 }, {}],
-34: [function(require, module, exports) {
+36: [function(require, module, exports) {
 
 /**
  * Module Dependencies
@@ -2801,8 +2825,8 @@ function stripNested (prop, str, val) {
   });
 }
 
-}, {"props":35,"component-props":35}],
-35: [function(require, module, exports) {
+}, {"props":37,"component-props":37}],
+37: [function(require, module, exports) {
 /**
  * Global Names
  */
@@ -2890,7 +2914,7 @@ function prefixed(str) {
 }
 
 }, {}],
-19: [function(require, module, exports) {
+21: [function(require, module, exports) {
 /**
  * Module Dependencies
  */
@@ -2972,8 +2996,8 @@ function isNumeric(obj) {
   return !isNan(parseFloat(obj)) && isFinite(obj);
 }
 
-}, {"debug":17,"to-camel-case":22,"./computed":32,"./prop":24,"./hooks":25}],
-32: [function(require, module, exports) {
+}, {"debug":19,"to-camel-case":24,"./computed":34,"./prop":26,"./hooks":27}],
+34: [function(require, module, exports) {
 /**
  * Module Dependencies
  */
@@ -3023,8 +3047,8 @@ function computed(el, prop, precomputed) {
   return undefined === ret ? ret : ret + '';
 }
 
-}, {"debug":17,"within-document":36,"./styles":30,"./style":18}],
-36: [function(require, module, exports) {
+}, {"debug":19,"within-document":38,"./styles":32,"./style":20}],
+38: [function(require, module, exports) {
 
 /**
  * Check if `el` is within the document.
@@ -3042,7 +3066,7 @@ module.exports = function(el) {
   return false;
 };
 }, {}],
-30: [function(require, module, exports) {
+32: [function(require, module, exports) {
 /**
  * Expose `styles`
  */
@@ -3065,7 +3089,7 @@ function styles(el) {
 }
 
 }, {}],
-31: [function(require, module, exports) {
+33: [function(require, module, exports) {
 /**
  * Export `swap`
  */
@@ -3100,10 +3124,10 @@ function swap(el, options, fn, args) {
 }
 
 }, {}],
-10: [function(require, module, exports) {
+12: [function(require, module, exports) {
 module.exports = '<div class="tip tip-hide">\n  <div class="tip-arrow"></div>\n  <div class="tip-inner"></div>\n</div>';
 }, {}],
-11: [function(require, module, exports) {
+13: [function(require, module, exports) {
 var support = require('dom-support')
 var getDocument = require('get-document')
 var withinElement = require('within-element')
@@ -3162,8 +3186,8 @@ function bodyOffset(body) {
   }
 }
 
-}, {"dom-support":37,"get-document":38,"within-element":39}],
-37: [function(require, module, exports) {
+}, {"dom-support":39,"get-document":40,"within-element":41}],
+39: [function(require, module, exports) {
 var domready = require('domready')
 
 module.exports = (function() {
@@ -3433,8 +3457,8 @@ module.exports = (function() {
 	return support;
 })();
 
-}, {"domready":40}],
-40: [function(require, module, exports) {
+}, {"domready":42}],
+42: [function(require, module, exports) {
 /*!
   * domready (c) Dustin Diaz 2014 - License MIT
   */
@@ -3467,7 +3491,7 @@ module.exports = (function() {
 });
 
 }, {}],
-38: [function(require, module, exports) {
+40: [function(require, module, exports) {
 
 /**
  * Module exports.
@@ -3517,7 +3541,7 @@ function getDocument(node) {
 }
 
 }, {}],
-39: [function(require, module, exports) {
+41: [function(require, module, exports) {
 
 /**
  * Check if the DOM element `child` is within the given `parent` DOM element.
@@ -3545,4 +3569,95 @@ module.exports = function within (child, parent) {
   return false;
 };
 
+}, {}],
+3: [function(require, module, exports) {
+/**
+ * Module Dependencies.
+ */
+
+var raf = require('raf');
+
+/**
+ * Export `throttle`.
+ */
+
+module.exports = throttle;
+
+/**
+ * Executes a function at most once per animation frame. Kind of like
+ * throttle, but it throttles at ~60Hz.
+ *
+ * @param {Function} fn - the Function to throttle once per animation frame
+ * @return {Function}
+ * @public
+ */
+
+function throttle(fn) {
+  var rtn;
+  var ignoring = false;
+
+  return function queue() {
+    if (ignoring) return rtn;
+    ignoring = true;
+
+    raf(function() {
+      ignoring = false;
+    });
+
+    rtn = fn.apply(this, arguments);
+    return rtn;
+  };
+}
+
+}, {"raf":43}],
+43: [function(require, module, exports) {
+/**
+ * Expose `requestAnimationFrame()`.
+ */
+
+exports = module.exports = window.requestAnimationFrame
+  || window.webkitRequestAnimationFrame
+  || window.mozRequestAnimationFrame
+  || window.oRequestAnimationFrame
+  || window.msRequestAnimationFrame
+  || fallback;
+
+/**
+ * Fallback implementation.
+ */
+
+var prev = new Date().getTime();
+function fallback(fn) {
+  var curr = new Date().getTime();
+  var ms = Math.max(0, 16 - (curr - prev));
+  var req = setTimeout(fn, ms);
+  prev = curr;
+  return req;
+}
+
+/**
+ * Cancel.
+ */
+
+var cancel = window.cancelAnimationFrame
+  || window.webkitCancelAnimationFrame
+  || window.mozCancelAnimationFrame
+  || window.oCancelAnimationFrame
+  || window.msCancelAnimationFrame
+  || window.clearTimeout;
+
+exports.cancel = function(id){
+  cancel.call(window, id);
+};
+
+}, {}],
+4: [function(require, module, exports) {
+module.exports = function linearConversion(a, b){
+  var o = a[1] - a[0]
+    , n = b[1] - b[0];
+
+  return function(x){
+    return (((x - a[0]) * n) / o) + b[0];
+  };
+};
 }, {}]}, {}, {"1":""})

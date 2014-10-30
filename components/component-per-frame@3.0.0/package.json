@@ -1,0 +1,24 @@
+{
+  "name": "per-frame",
+  "description": "throttle per animation frame",
+  "version": "3.0.0",
+  "component": {
+    "scripts": {
+      "per-frame/index.js": "index.js"
+    }
+  },
+  "dependencies": {
+    "component-raf": "1.1.3"
+  },
+  "browser": {
+    "raf": "component-raf"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/component/per-frame.git"
+  },
+  "devDependencies": {
+    "zuul": "~1.10.2"
+  }
+}

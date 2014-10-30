@@ -388,10 +388,16 @@ a:hover {
 }
 
 nav.navigation {
-  z-index: 5;
+  z-index: 0;
   width: 100%;
   text-align: center;
-  margin-top: 15px;
+  margin-top: 25px;
+  position: fixed;
+}
+
+article {
+  padding-top: 125px;
+  z-index: 5;
 }
 
 nav .page-nav {
@@ -440,7 +446,10 @@ nav a i {
 
 nav .page-nav a {
   margin-right: 30px;
+  letter-spacing: 0px;
   margin-left: 0;
+  font-weight: 400;
+  letter-spacing: 3px;
 }
 
 nav .social-nav {
@@ -912,7 +921,7 @@ i.ion-ios7-arrow-left {
 }
 
 .entry.grid {
-  margin-top: 35px;
+  margin-top: 45px;
   max-width: 850px;
 }
 
@@ -977,6 +986,7 @@ a.show-all {
   display: inline-block;
   margin-top: 45px;
   letter-spacing: 3px;
+  display: none;
 }
 
 .footer-meta hr {
@@ -1031,7 +1041,7 @@ code {
 
 .brand a {
   font-size: 30px;
-  letter-spacing: 2px;
+  letter-spacing: 0;
   margin-top: 15px;
 }
 
