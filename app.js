@@ -35,17 +35,22 @@ for(var i = 0, el; el = els[i]; i++) {
 var header = document.querySelector('.navigation');
 if (!header) return;
 
-var conversion = linearConversion([0, 200], [1, 0.8]);
+var conversion = linearConversion([0, 200], [1, 0]);
 var scaleConversion = linearConversion([0, 200], [1, 0.8]);
 var translateConversion = linearConversion([0, 200], [0, -70]);
 window.addEventListener('scroll', throttle(onscroll), false);
 
+var doOpacity = document.body.classList.contains('about');
+
 function onscroll() {
   var top = window.scrollY || document.documentElement.scrollTop;
-  // var opacity = conversion(top);
-  // if (opacity < 0) opacity = 0;
-  // if (opacity > 1) opacity = 1;
-  // header.style.opacity = opacity;
+
+    var opacity = conversion(top);
+    if (opacity < 0) opacity = 0;
+    if (opacity > 1) opacity = 1;
+    header.style.opacity = opacity;
+
+
   var pos = translateConversion(top);
   if (pos > 0) pos = 0;
   if (pos < -150) pos = -150;
