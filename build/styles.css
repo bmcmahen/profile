@@ -373,7 +373,7 @@ a:hover {
 }
 
 .intro.blog {
-  padding-top: 100px;
+  padding-top: 30px;
   margin-bottom: 75px;
 }
 
@@ -1051,4 +1051,10 @@ code {
 
 .brand span {
   color: #E10E0E;
+}
+
+.about-me hr {
+  width: 150px;
+  border: none;
+  border-top: 1px solid #aaa;
 }

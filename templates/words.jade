@@ -2,7 +2,6 @@ extends ./layout.jade
 
 block content
   .intro.blog!=contents
-  h3 articles
   for post in collections.posts
     div.title
       a(href='/'+ post.path)=post.title

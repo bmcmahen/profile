@@ -346,18 +346,18 @@ a:hover {
 
 .about p,
 .intro p {
-text-transform: lowercase;
-font-size: 27px;
-letter-spacing: 4px;
-margin: 25px 0;
-color: rgba(55, 55, 55, 0.9);
-max-width: 500px;
-margin: 25px auto;
-text-align: center;
+  text-transform: lowercase;
+  font-size: 27px;
+  letter-spacing: 4px;
+  margin: 25px 0;
+  color: rgba(55, 55, 55, 0.9);
+  max-width: 500px;
+  margin: 25px auto;
+  text-align: center;
 }
 
 .intro.blog {
-  padding-top: 100px;
+  padding-top: 30px;
   margin-bottom: 75px;
 }
 
@@ -944,4 +944,10 @@ code {
 
 .brand span {
   color: #E10E0E;
+}
+
+.about-me hr {
+  width: 150px;
+  border: none;
+  border-top: 1px solid #aaa;
 }

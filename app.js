@@ -1,61 +1,50 @@
-// var page = require('visionmedia/page.js');
-// var onload = require('component/onload');
+/**
+ * Module dependencies
+ */
 
-// page('/', function () {
-//   document.body.classList.remove('show-projects');
-// });
-//
-// page('/projects', function (ctx, next) {
-//   document.body.classList.add('show-projects');
-// });
-//
-// page();
-//
-//
-// setTimeout(function () {
-//   document.body.classList.add('fully-loaded');
-// }, 10000);
-
-var Tip = require('component/tip');
-var throttle = require('component/per-frame');
 var linearConversion = require('bmcmahen/linear-conversion');
-
-var els = document.querySelectorAll('a[title]');
-
-for(var i = 0, el; el = els[i]; i++) {
-  var val = el.getAttribute('title');
-  var tip = new Tip(val, { delay: 1});
-  el.setAttribute('title', '');
-  tip.cancelHideOnHover();
-  tip.position('bottom');
-  tip.attach(el);
-  tip.effect('fade');
-}
+var transformProperty = require('component/transform-property');
+var ease = require('component/ease');
 
 var header = document.querySelector('.navigation');
-if (!header) return;
 
+// create conversion fns
 var conversion = linearConversion([0, 200], [1, 0]);
-var scaleConversion = linearConversion([0, 200], [1, 0.8]);
 var translateConversion = linearConversion([0, 200], [0, -70]);
-window.addEventListener('scroll', throttle(onscroll), false);
 
-var doOpacity = document.body.classList.contains('about');
-
-function onscroll() {
-  var top = window.scrollY || document.documentElement.scrollTop;
-
-    var opacity = conversion(top);
-    if (opacity < 0) opacity = 0;
-    if (opacity > 1) opacity = 1;
-    header.style.opacity = opacity;
-
-
-  var pos = translateConversion(top);
-  if (pos > 0) pos = 0;
-  if (pos < -150) pos = -150;
-  header.style.transform = 'translateY('+ pos + 'px)';
-  // scale('+ scaleConversion(top) + ')
+// bind throttled scroll event
+if (header) {
+  setInterval(updatePage, 10);
+  updatePage();
 }
 
-onscroll();
+var scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+function updatePage() {
+  window.requestAnimationFrame(function () {
+    scrollTop = window.scrollY || document.documentElement.scrollTop;
+    animateElements();
+  });
+}
+
+function animateElements() {
+  // opacity
+  var opacity = conversion(scrollTop);
+  if (opacity < 0) opacity = 0;
+  if (opacity > 1) opacity = 1;
+  if (opacity >= 0 && opacity <= 1){
+    header.style.opacity = ease.inOutQuad(opacity.toFixed(2));
+  }
+
+  // translate
+  var pos = translateConversion(scrollTop);
+  if (pos > 0) pos = 0;
+  if (pos < -150) pos = -150;
+  if (pos <= 0 && pos >= -150){
+    header.style[transformProperty] = 'translateY('+ pos + 'px)';
+  }
+}
+
+// function easeInOutQuad(t, b, c, d) {
+//   return -c/2 * (Math.cos(Math.PI*t/d) - 1) + b;
+// }
