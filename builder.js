@@ -53,9 +53,15 @@ function buildProject() {
     duo(__dirname)
       .entry('app.js')
       .buildTo('build')
-      .use(jade())
       .write(function (err) {
-        if (!err)     console.log('built');
+        if (!err) console.log('built app.js');
+      });
+
+    duo(__dirname)
+      .entry('post.js')
+      .buildTo('build')
+      .write(function (err) {
+        if (!err) console.log('built post.js');
       });
   });
 

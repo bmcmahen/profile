@@ -2,6 +2,7 @@
 template: post.jade
 pageName: blogPost
 header: images/trees.jpg
+headerBlurred: images/trees-blurred.jpg
 headerAbsolutePath: /blog/eugenics-archive/images/trees.jpg
 title: Introducing the Eugenics Archive
 shortDescription: Recently I've had the pleasure of working with the Living Archives on Eugenics team with the goal of creating a new, interactive, and engaging website.
