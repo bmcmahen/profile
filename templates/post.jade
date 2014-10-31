@@ -4,10 +4,9 @@ block content
   .entry.grid
     a.show-all(href='/blog')
       span More Articles
-    .top-image
+    .top-image(style='background-image: url('+ header +');')
       .top-meta
         h1.title!=title
-        span.meta by, <a href='/'>Ben McMahen</a>
     .contents!=contents
       .footer-meta
         hr

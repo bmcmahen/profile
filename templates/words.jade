@@ -3,5 +3,7 @@ extends ./layout.jade
 block content
   .intro.blog!=contents
   for post in collections.posts
-    div.title
-      a(href='/'+ post.path)=post.title
+    .story(style='background-image: url('+ post.headerAbsolutePath +');')
+      .meta
+        a(href='/'+ post.path)
+          h4=post.title

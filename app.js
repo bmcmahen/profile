@@ -6,11 +6,12 @@ var linearConversion = require('bmcmahen/linear-conversion');
 var transformProperty = require('component/transform-property');
 var ease = require('component/ease');
 
+// cache nav header el
 var header = document.querySelector('.navigation');
 
 // create conversion fns
 var conversion = linearConversion([0, 200], [1, 0]);
-var translateConversion = linearConversion([0, 200], [0, -70]);
+var translateConversion = linearConversion([0, 200], [0, -100]);
 
 // bind throttled scroll event
 if (header) {
@@ -43,6 +44,7 @@ function animateElements() {
   if (pos <= 0 && pos >= -150){
     header.style[transformProperty] = 'translateY('+ pos + 'px)';
   }
+
 }
 
 // function easeInOutQuad(t, b, c, d) {

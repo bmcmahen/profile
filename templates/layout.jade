@@ -8,19 +8,24 @@ html
   meta(name="viewport", content="width=device-width, initial-scale=1")
 body(class=pageName)
   nav.navigation
-    .brand
-      a(href='/')<span>ben</span>mcmahen
+    a(href='/', title='About Ben McMahen')
+      .me
     .page-nav
       a(href='/')
         span about
+        i.ion-ios7-home
       a(href='/blog')
         span blog
+        i.ion-ios7-paper
       a(href='/projects')
         span projects
+        i.ion-ios7-box
       a(href='https://twitter.com/@benmcmahen')
         span twitter
+        i.ion-social-twitter
       a(href='https://github.com/bmcmahen')
         span github
+        i.ion-social-github
 
   article
     block content

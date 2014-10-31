@@ -1,103 +1,26 @@
-<html><head></head><link href="/styles.css" rel="stylesheet" type="text/css"/><link href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css"/><link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/default.min.css"/><script src="//use.typekit.net/job3khb.js"></script><script>try{Typekit.load();}catch(e){}</script><meta name="viewport" content="width=device-width, initial-scale=1"/></html><body class="blogPost"><nav class="navigation"><div class="brand"><a href="/"><span>ben</span>mcmahen</a></div><div class="page-nav"><a href="/"><span>about</span></a><a href="/blog"><span>blog</span></a><a href="/projects"><span>projects</span></a><a href="https://twitter.com/@benmcmahen"><span>twitter</span></a><a href="https://github.com/bmcmahen"><span>github</span></a></div></nav><article><div class="entry grid"><a href="/blog" class="show-all"><span>More Articles</span></a><div class="top-image"><div class="top-meta"><h1 class="title">Introducing the Eugenics Archive</h1><span class="meta">by, <a href='/'>Ben McMahen</a></span></div></div><div class="contents"><p>As web applications become increasingly large and complex, we inevitably need tools to manage our client-side code. Instead of writing one huge script file, we want to be able to split up our code into multiple, distinct modules. We want to encourage code-reuse, and be able to easily import and add various dependencies to our projects -- whether a UI-component like a dropdown menu, or a DOM manipulation library like jQuery. And it&#39;s not just Javascript that we want to organize -- it&#39;s also the css, html templates, fonts, images, and other static resources that are part of any web application. Component provides a mechanism to do all of the above:</p>
+<html><head></head><link href="/styles.css" rel="stylesheet" type="text/css"/><link href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css"/><link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/default.min.css"/><script src="//use.typekit.net/job3khb.js"></script><script>try{Typekit.load();}catch(e){}</script><meta name="viewport" content="width=device-width, initial-scale=1"/></html><body class="blogPost"><nav class="navigation"><a href="/" title="About Ben McMahen"><div class="me"></div></a><div class="page-nav"><a href="/"><span>about</span><i class="ion-ios7-home"></i></a><a href="/blog"><span>blog</span><i class="ion-ios7-paper"></i></a><a href="/projects"><span>projects</span><i class="ion-ios7-box"></i></a><a href="https://twitter.com/@benmcmahen"><span>twitter</span><i class="ion-social-twitter"></i></a><a href="https://github.com/bmcmahen"><span>github</span><i class="ion-social-github"></i></a></div></nav><article><div class="entry grid"><a href="/blog" class="show-all"><span>More Articles</span></a><div style="background-image: url(images/trees.jpg);" class="top-image"><div class="top-meta"><h1 class="title">Introducing the Eugenics Archive</h1></div></div><div class="contents"><p>For the past couple of years I&#39;ve had the pleasure of working with the Living Archives on Eugenics team with the goal of creating a new, interactive, and engaging website to explore the history (and continued legacy) of eugenics in Western Canada, and <a href="http://eugenicsarchive.ca/discover/world">around the world</a>. In many ways, it&#39;s a seminal project due to the sheer, vast amount of content available. But I think it&#39;s important for other reasons, too.</p>
+<p>Before starting this website, our team had a vision for what we wanted to create. We wanted a database that multiple people could contribute to, with its content fully cited, and of high quality. But we didn&#39;t necessarily want to tell people what happened. We wanted to provide small pieces of information, that could be explored in different contexts. We wanted users to create their own narratives -- to make their own <a href="http://eugenicsarchive.ca/discover/connections">connections</a> between ideas, concepts, people and places. We wanted, above all, to engage users through interaction, animation, video and images. The result was the creation of 10 unique tools for exploring the database, which includes a timeline, a spinning globe, a network of ideas &amp; concepts, among others. This exhibits what I&#39;ve described as a &quot;shallow design philosphy&quot; -- in the sense that there is a lot of information on the website, that you can access very quickly, in many different contexts. This is not to say that the content isn&#39;t often rigorous and detailed, as the <a href="http://eugenicsarchive.ca/discover/encyc">encyc</a> page clearly demonstrates -- it&#39;s to say that you, typically, can access content quickly, and easily.</p>
+<p>It&#39;s an experiment. We still want to offer narrative experiences where they make sense -- and we are working on parts of this right now. Provide a blend of these two forms of accessing content, so that you don&#39;t feel entirely overwhelmed, but also liberated.</p>
+<p>For me, personally, this project was a great opportunity to utilize and contribute to the open source community. The stack is fairly conventional -- express &amp; node on the backend, with most of the page rendered clientside using modularized components. The entire website is available on <a href="http://github.com/eugenicsarchivesca/know-eugenics">github</a>. And we have produced multiple open source components that we utilize throughout the website.</p>
+<p>Some of the challenges for a page like this -- that is highly interactive in nature -- is ensuring that everything is accessible. This has been a struggle, and continues to be. What do I mean by accessible? I mean not only should it be compatible with other browsers, and easy to use for people -- but also, and importantly for this project, it should be accessible for people with disabilities. We have, where possible, created screen-reader fallbacks to canvas and svg based visuals, and we have attempted to use meaningful html semantics and aria attributes where applicable.</p>
 <ul>
-<li>organize your application around multiple, discrete modules</li>
-<li>easily import modules that others have published, to be used as dependencies.</li>
-<li>automatically combine all of your modules into a single javascript and css file for use at runtime.</li>
+<li>generally accessibility is not a priority for people, and this is more often the case when utilizing small libraries. In retrospect, one of the big advantages of using a library like Backbone for things like tooltips, menus, etc., is that they handle accessibility issues for you. This, in my opinion, is a big reason for using Backbone as a solution. There is nothing stopping us from creating small, individual components that are fully accessible -- but we need to make this a priority. It&#39;s not uncommon to see browser compatibility notes on a github readme, but how often do you see accessibility notes? This is something we should consider.</li>
+<li>when accessibility is concerned, native widgets are a huge benefit. my advice -- and i learned this a bit late -- is use native widgets whenever possible.</li>
+<li><p>use proper html semantics, and then &quot;hack&quot; it to look pretty. Take forms, for example -&gt; use formsets and always use labels. If you don&#39;t want to visually use labels, add a &#39;sr-only&#39; class to hide them.</p>
+</li>
+<li><p>when I first started working on this site, it became apparent that we needed some way to upload and store images. I relied on a small startup at the time because their prices were low, and I wanted to avoid the complexity of dynamic image handling on my own. The problem -- the startup soon raised their prices. This is clearly one of the issues of relying on a service like this. The result, I ended up creating my own dynamic image handler -- uploading the images on s3, etc., which has worked okay -- but has added complexity, and has been a performance problem since launch.</p>
+</li>
+<li><p>what is it?</p>
+</li>
+<li>what does it mean / represent for me?</li>
+<li>embracing open source, and contributing to it</li>
+<li>what were some of the challenges?<ul>
+<li>accessibility</li>
+<li>browser compatibility</li>
+<li>performance (relying on external services)</li>
 </ul>
-<pre><code class="javascript"><span class="hljs-keyword">var</span> ben = <span class="hljs-string">'a human of some sort'</span>;
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">doGood</span><span class="hljs-params">(because)</span> </span>{
-  <span class="hljs-keyword">if</span> (because === <span class="hljs-string">'you should'</span>) {
-    alert(<span class="hljs-string">'okay'</span>);
-  }
-}</code></pre>
-
-<h2 id="structuring-your-application">Structuring your application</h2>
-<p>Our basic application structure involves three main parts: (1) a main <code>component.json</code> that defines where our modules are contained. (2) a directory containing those modules, and (3) a main <code>boot</code> module, which contains the logic for initially starting our application.</p>
-<pre><code>.
-|-- component.json
-|-- lib
-  |-- boot
-    |-- component.json
-    |-- index.js
-  |-- login
-    |-- component.json
-    |-- index.js
-    |-- index.css
-    |-- template.html
-</code></pre><p>Within our example application, we have our main <code>component.json</code> file which tells component to look within the <code>lib</code> path to find all of our modules. We have also defined a local dependency -- our <code>boot</code> module, which itself is a folder contained within our <code>lib</code> path.</p>
-<pre><code>{
-  &quot;name&quot;: &quot;myapp&quot;,
-  &quot;description&quot;: &quot;a simple app to demonstrate component&quot;,
-  &quot;paths&quot;: [&quot;lib&quot;],
-  &quot;local&quot;: [&quot;boot&quot;]
-}
-</code></pre><p>Our <code>boot</code> module defines the boot procedure for our application. It and all of the modules contained within <code>lib</code> are themselves components; that is, they contain their own <code>component.json</code> which defines their own dependencies, both local and external. Let&#39;s look at our boot&#39;s <code>component.json</code>.</p>
-<pre><code>{
-  &quot;name&quot;: &quot;boot&quot;,
-  &quot;description&quot;: &quot;start my app&quot;,
-  &quot;dependencies&quot;: {
-    &quot;bmcmahen/transit&quot;: &quot;*&quot;
-  },
-  &quot;main&quot;: &quot;index.js&quot;,
-  &quot;scripts&quot;: [
-    &quot;index.js&quot;
-  ],
-  &quot;local&quot;: [
-    &quot;login&quot;
-  ]
-}
-</code></pre><p>This <code>boot</code> component looks much like any other component in our application. It has a name, description, and it defines all of our dependencies. The <code>dependencies</code> key defines external dependencies installed from github, such as <code>component/classes</code>, <code>bmcmahen/transit</code>, etc. The <code>local</code> key defines dependencies contained within your application -- in this case, our login component which we want to load when our application first boots. Let&#39;s take a look at our <code>index.js</code> file, which contains our boot procedure.</p>
-<pre><code>// import our external dependencies
-var router = require(&#39;transit&#39;);
-
-// import our local dependencies.
-require(&#39;login&#39;);
-
-// start our router
-router.listen(&#39;/&#39;);
-router.start();
-</code></pre><p>When our application boots, we want to import our router so that we can listen for URL changes. We also want to import our login module, which itself listens for the appropriate URL and renders a login form when requested. Again, our login module defines its own <code>component.json</code> file, with its own external and local dependencies, templates, styles, etc.</p>
-<pre><code>{
-  &quot;name&quot;: &quot;login&quot;,
-  &quot;description&quot;: &quot;login form&quot;,
-  &quot;dependencies&quot;: {
-    &quot;bmcmahen/transit&quot;: &quot;*&quot;
-  },
-  &quot;development&quot;: {},
-  &quot;main&quot;: &quot;index.js&quot;,
-  &quot;scripts&quot;: [
-    &quot;index.js&quot;
-  ],
-  &quot;styles&quot;: [
-    &quot;login.css&quot;
-  ],
-  &quot;templates&quot;: [
-    &quot;template.html&quot;
-  ]
-}
-</code></pre><p>And our <code>index.js</code> file contains logic particular to this module.</p>
-<pre><code>var router = require(&#39;transit&#39;);
-
-// When the user goes to /login, we render
-// our login form.
-
-router(&#39;/login&#39;, function(){
-  // render our login form
-});
-</code></pre><h2 id="building-the-application">Building the Application</h2>
-<p>Finally, we need to actually install all of our external dependencies and build our application into parts that we can easily serve alongside our html document. Navigate to your application folder where root <code>component.json</code> file is contained. Use the <code>component</code> command-line tools to install all of the dependencies for your entire application.</p>
-<pre><code>$ component install
-</code></pre><p>When installation finishes, you need to build the files that will be served to the client. Again, in the terminal:</p>
-<pre><code>$ component build
-</code></pre><p>This create a single <code>build.js</code> and <code>build.css</code> file within the <code>build</code> folder. You need to attach these to the HTML documents that you intend to serve to the user. At the end of your HTML file, import <code>build.js</code> and require the boot module to initiate the booting procedure.</p>
-<pre><code>&lt;html&gt;
-&lt;head&gt;
- &lt;link href=&#39;build/build.css&#39; rel=&#39;stylesheet&#39;&gt;
-&lt;/head&gt;
-&lt;body&gt;
- &lt;script src=&#39;build/build.js&#39;&gt;&lt;/script&gt;
- &lt;script&gt; require(&#39;boot&#39;); &lt;/script&gt;
-&lt;/body&gt;
-</code></pre><div class="footer-meta"><hr/><p><a href='/'>Ben McMahen</a> is a web developer and designer based in Edmonton, Alberta. <br><a href='/blog'>Read more posts</a> by Ben.</p><a href="https://twitter.com/BenMcMahen" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @BenMcMahen</a>
+</li>
+<li>what parts, in particular, stand out?</li>
+</ul>
+<div class="footer-meta"><hr/><p><a href='/'>Ben McMahen</a> is a web developer and designer based in Edmonton, Alberta. <br><a href='/blog'>Read more posts</a> by Ben.</p><a href="https://twitter.com/BenMcMahen" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @BenMcMahen</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></div></div></div></article><script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script><script src="/app.js"></script></body>

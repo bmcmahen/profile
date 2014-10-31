@@ -29,7 +29,7 @@ function buildProject() {
         pattern: 'pages/*.md'
       },
       posts: {
-        pattern: 'blog/*.md',
+        pattern: 'blog/**/*.md',
         sortBy: 'date',
         reverse: true
       }
