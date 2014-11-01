@@ -7,10 +7,14 @@ var events = require('component/events');
 var Fade = require('bmcmahen/cross-fade');
 var drawImage = require('bmcmahen/canvas-image-cover');
 var throttle = require('component/per-frame');
+var transformProperty = require('component/transform-property');
 
 
 // translate scrollTop to opacity
 var conversion = linearConversion([0, 250], [0, 1]);
+var transConv = linearConversion([0, 350], [0, 60]);
+var opacConv = linearConversion([150, 450], [1, 0.3]);
+var topMeta = document.querySelector('.top-meta');
 
 
 /**
@@ -48,11 +52,23 @@ function FadeImage(canvas, url, url2){
  */
 
 FadeImage.prototype.bind = function(){
-  this.throttledDraw = window.setInterval(this.draw.bind(this), 10);
   this.throttledResize = throttle(this.resize.bind(this));
   this.events = events(window, this);
   this.events.bind('resize', 'throttledResize');
+  this.events.bind('scroll', 'onscroll');
   return this;
+};
+
+
+FadeImage.prototype.onscroll = function () {
+  if (!this.drawing) {
+    this.throttledDraw = window.setInterval(this.draw.bind(this), 10);
+    this.drawing = true;
+    this.timer = window.setTimeout(function () {
+      window.clearInterval(this.throttledDraw);
+      this.drawing = false;
+    }.bind(this), 1000);
+  }
 };
 
 /**
@@ -77,6 +93,11 @@ FadeImage.prototype.draw = function(){
     var conv = conversion(top);
     if (conv >= 0 && conv < 600 && this.fade) {
       this.fade.transition(conv);
+    }
+    var y = transConv(top);
+    if (y < 120) {
+      topMeta.style[transformProperty] = 'translate3d(0, '+ y + 'px, 0)';
+      topMeta.style.opacity = opacConv(top).toFixed(2);
     }
   }.bind(this));
   return this;

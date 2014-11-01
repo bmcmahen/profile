@@ -699,12 +699,13 @@ h1.title {
   color: #333;
   font-size: 50px;
   font-weight: 600;
-  background: rgba(238, 255, 118, 0.8);
+  background: rgba(238, 255, 118, 0.9);
   margin-bottom: 10px;
+  font-style: italic;
   text-transform: lowercase;
   display: inline;
   padding: 0 5px;
-  letter-spacing: 0px;
+  letter-spacing: 3px;
   text-align: left;
   margin-top: 10px;
 }
@@ -767,7 +768,7 @@ a.show-all {
 .top-meta {
   position: absolute;
   bottom: 100%;
-  margin-bottom: 75px;
+  margin-bottom: 100px;
   padding: 0 25px;
 }
 
@@ -817,6 +818,16 @@ code {
   background: none !important;
 }
 
+canvas {
+  opacity: 0;
+  -webkit-transition: opacity 0.8s ease-out;
+  transition: opacity 0.8s ease-out;
+}
+
+canvas.loaded {
+  opacity: 1;
+}
+
 body.blog-post {
   padding-top: 600px;
 }
@@ -848,7 +859,53 @@ body.blog-post article {
   background: #E10E0E;
 }
 
+.small-left {
+  float: left;
+  margin: 10px;
+  margin-right: 20px;
+  margin-left: -100px;
+  width: 550px;
+}
+
+.extra-small-left {
+  float: left;
+  margin: 10px;
+  margin-right: 20px;
+  margin-left: 0;
+  width: 400px;
+}
+
+.small-right {
+  float: right;
+  margin: 10px;
+  margin-left: 20px;
+  margin-right: -100px;
+  width: 550px;
+}
+
+p.caption {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 100;
+  font-style: italic;
+  color: rgba(0,0,0,0.4);
+  font-family: futura;
+  line-height: 19px;
+  margin-top: 10px;
+  padding-bottom: 0;
+}
+
 @media handheld, only screen and (max-width: 767px) {
+  img.small-left {
+    margin: 10px 0;
+    width: 100%;
+  }
+
+  img.small-right {
+    margin: 10px 0;
+    width: 100%;
+  }
+
   nav .page-nav a {
     margin-right: 20px;
   }
@@ -986,10 +1043,6 @@ body.blog-post article {
   h1.title {
     font-size: 30px;
     line-height: 40px;
-  }
-
-  span.meta {
-    display: none;
   }
 
   .entry p,

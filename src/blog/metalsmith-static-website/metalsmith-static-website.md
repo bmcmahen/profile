@@ -1,8 +1,9 @@
 ---
 template: post.jade
 pageName: blogPost
-header: images/forest-mist.jpg
-headerAbsolutePath: /build-a-static-website-using-metalsmith/images/forest-mist.jpg
+header: images/cans.jpg
+headerBlurred: images/cans-blurred.jpg
+headerAbsolutePath: /build-a-static-website-using-metalsmith/images/cans.jpg
 title: Build a static website using Metalsmith
 ---
 For the past couple of years I've had the pleasure of working with the Living Archives on Eugenics team with the goal of creating a new, interactive, and engaging website to explore the history (and continued legacy) of eugenics in Western Canada, and [around the world](http://eugenicsarchive.ca/discover/world). In many ways, it's a seminal project due to the sheer, vast amount of content available. But I think it's important for other reasons, too.

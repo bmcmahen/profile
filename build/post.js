@@ -92,10 +92,14 @@ var events = require('component/events');
 var Fade = require('bmcmahen/cross-fade');
 var drawImage = require('bmcmahen/canvas-image-cover');
 var throttle = require('component/per-frame');
+var transformProperty = require('component/transform-property');
 
 
 // translate scrollTop to opacity
 var conversion = linearConversion([0, 250], [0, 1]);
+var transConv = linearConversion([0, 350], [0, 60]);
+var opacConv = linearConversion([150, 450], [1, 0.3]);
+var topMeta = document.querySelector('.top-meta');
 
 
 /**
@@ -133,11 +137,23 @@ function FadeImage(canvas, url, url2){
  */
 
 FadeImage.prototype.bind = function(){
-  this.throttledDraw = window.setInterval(this.draw.bind(this), 10);
   this.throttledResize = throttle(this.resize.bind(this));
   this.events = events(window, this);
   this.events.bind('resize', 'throttledResize');
+  this.events.bind('scroll', 'onscroll');
   return this;
+};
+
+
+FadeImage.prototype.onscroll = function () {
+  if (!this.drawing) {
+    this.throttledDraw = window.setInterval(this.draw.bind(this), 10);
+    this.drawing = true;
+    this.timer = window.setTimeout(function () {
+      window.clearInterval(this.throttledDraw);
+      this.drawing = false;
+    }.bind(this), 1000);
+  }
 };
 
 /**
@@ -162,6 +178,11 @@ FadeImage.prototype.draw = function(){
     var conv = conversion(top);
     if (conv >= 0 && conv < 600 && this.fade) {
       this.fade.transition(conv);
+    }
+    var y = transConv(top);
+    if (y < 120) {
+      topMeta.style[transformProperty] = 'translate3d(0, '+ y + 'px, 0)';
+      topMeta.style.opacity = opacConv(top).toFixed(2);
     }
   }.bind(this));
   return this;
@@ -219,7 +240,7 @@ function boot() {
 
 boot();
 
-}, {"bmcmahen/linear-conversion":2,"component/events":3,"bmcmahen/cross-fade":4,"bmcmahen/canvas-image-cover":5,"component/per-frame":6}],
+}, {"bmcmahen/linear-conversion":2,"component/events":3,"bmcmahen/cross-fade":4,"bmcmahen/canvas-image-cover":5,"component/per-frame":6,"component/transform-property":7}],
 2: [function(require, module, exports) {
 module.exports = function linearConversion(a, b){
   var o = a[1] - a[0]
@@ -408,8 +429,8 @@ function parse(event) {
   }
 }
 
-}, {"event":7,"delegate":8}],
-7: [function(require, module, exports) {
+}, {"event":8,"delegate":9}],
+8: [function(require, module, exports) {
 var bind = window.addEventListener ? 'addEventListener' : 'attachEvent',
     unbind = window.removeEventListener ? 'removeEventListener' : 'detachEvent',
     prefix = bind !== 'addEventListener' ? 'on' : '';
@@ -446,7 +467,7 @@ exports.unbind = function(el, type, fn, capture){
   return fn;
 };
 }, {}],
-8: [function(require, module, exports) {
+9: [function(require, module, exports) {
 /**
  * Module dependencies.
  */
@@ -490,8 +511,8 @@ exports.unbind = function(el, type, fn, capture){
   event.unbind(el, type, fn, capture);
 };
 
-}, {"closest":9,"event":7}],
-9: [function(require, module, exports) {
+}, {"closest":10,"event":8}],
+10: [function(require, module, exports) {
 var matches = require('matches-selector')
 
 module.exports = function (element, selector, checkYoSelf, root) {
@@ -512,8 +533,8 @@ module.exports = function (element, selector, checkYoSelf, root) {
   }
 }
 
-}, {"matches-selector":10}],
-10: [function(require, module, exports) {
+}, {"matches-selector":11}],
+11: [function(require, module, exports) {
 /**
  * Module dependencies.
  */
@@ -561,8 +582,8 @@ function match(el, selector) {
   return false;
 }
 
-}, {"query":11}],
-11: [function(require, module, exports) {
+}, {"query":12}],
+12: [function(require, module, exports) {
 function one(selector, el) {
   return el.querySelector(selector);
 }
@@ -677,8 +698,8 @@ CrossFade.prototype.draw = function(fn){
   return this;
 };
 
-}, {"component/emitter":12}],
-12: [function(require, module, exports) {
+}, {"component/emitter":13}],
+13: [function(require, module, exports) {
 
 /**
  * Expose `Emitter`.
@@ -943,8 +964,8 @@ function throttle(fn) {
   };
 }
 
-}, {"raf":13}],
-13: [function(require, module, exports) {
+}, {"raf":14}],
+14: [function(require, module, exports) {
 /**
  * Expose `requestAnimationFrame()`.
  */
@@ -983,5 +1004,27 @@ var cancel = window.cancelAnimationFrame
 exports.cancel = function(id){
   cancel.call(window, id);
 };
+
+}, {}],
+7: [function(require, module, exports) {
+
+var styles = [
+  'webkitTransform',
+  'MozTransform',
+  'msTransform',
+  'OTransform',
+  'transform'
+];
+
+var el = document.createElement('p');
+var style;
+
+for (var i = 0; i < styles.length; i++) {
+  style = styles[i];
+  if (null != el.style[style]) {
+    module.exports = style;
+    break;
+  }
+}
 
 }, {}]}, {}, {"1":""})
