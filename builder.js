@@ -57,12 +57,12 @@ function buildProject() {
         if (!err) console.log('built app.js');
       });
 
-    duo(__dirname)
-      .entry('post.js')
-      .buildTo('build')
-      .write(function (err) {
-        if (!err) console.log('built post.js');
-      });
+    // duo(__dirname)
+    //   .entry('post.js')
+    //   .buildTo('build')
+    //   .write(function (err) {
+    //     if (!err) console.log('built post.js');
+    //   });
   });
 
 }

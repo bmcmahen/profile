@@ -11,12 +11,32 @@ body {
   padding-right: 20px; /* column-space */
 }
 
-.grid {
-  width: 100%;
-  min-width: 755px;
-  max-width: 950px;
+
+
+ul.grid {
+  max-width: 650px;
   margin: 0 auto;
   overflow: hidden;
+}
+
+
+ul.grid:last-child {
+  margin-bottom: 40px;
+}
+
+ul.grid > li {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+ul.grid > li > .meta {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+ul.grid > li > .meta p {
+  display: none;
 }
 
 .canvas-overlay {
@@ -218,7 +238,7 @@ a:hover {
 }
 
 .me {
-  background-image: url(/images/me2.jpg);
+  background-image: url(/images/me7.jpg);
   background-size: cover;
   width: 100px;
   height: 100px;
@@ -294,12 +314,12 @@ nav.navigation {
 }
 
 article {
-  padding-top: 195px;
+  padding-top: 215px;
   z-index: 5;
 }
 
 nav .page-nav {
-  margin-left: 25px;
+  padding-bottom: 35px;
 }
 
 nav .social-nav {
@@ -391,23 +411,27 @@ nav a:hover,
 }
 
 .delay-1 {
-  animation-delay: 1.5s;
+  animation-delay: 0.5s;
 }
 
 .delay-2 {
-  animation-delay: 3s;
+  animation-delay: 1s;
 }
 
 .delay-3 {
-  animation-delay: 4.5s;
+  animation-delay: 1.5s;
 }
 
 .delay-4 {
-  animation-delay: 6s;
+  animation-delay: 2s;
 }
 
 .delay-5 {
-  animation-delay: 7.5s;
+  animation-delay: 2.5s;
+}
+
+.delay-6 {
+  animation-delay: 3s;
 }
 
 .fully-loaded .about-me * {
@@ -516,11 +540,15 @@ ul.grid {
   margin-top: 0;
 }
 
+.about p:last-child {
+  margin-bottom: 0;
+}
+
 h3 {
   text-transform: lowercase;
   font-size: 18px;
   letter-spacing: 4px;
-  margin-top: 5px;
+  margin-top: 15px;
   color: #333;
   text-align: center;
   font-weight: 200;
@@ -561,7 +589,7 @@ h3 {
   z-index: 10;
   transition-delay: 0.3s;
   padding: 5px 0;
-  margin-top: 50px;
+  margin-top: 20px;
 }
 
 .show-projects .about-me {
@@ -573,7 +601,7 @@ h3 {
 }
 
 .projects-page {
-  padding-top: 50px;
+  padding-top: 20px;
 }
 
 
@@ -754,10 +782,10 @@ code {
   color: #E10E0E;
 }
 
-.about-me hr {
+hr {
   width: 150px;
   border: none;
-  border-top: 2px solid rgba(0, 0, 0, 0.15);
+  border-top: 1px solid rgba(0, 0, 0, 0.16);
 }
 
 .contents a {
@@ -1030,4 +1058,32 @@ p.caption {
     font-size: 25px;
     max-width: 70%;
   }
+}
+
+.more-about-me {
+  margin-top: 0px;
+  margin-bottom: 40px;
+}
+
+.more-about-me p {
+  font-size: 18px;
+  font-family: georgia, serif;
+  letter-spacing: 0;
+  text-align: justify;
+  text-transform: none;
+  line-height: 35px;
+  margin-bottom: 50px;
+}
+
+.about footer p {
+  font-size: 18px;
+  font-family: georgia, serif;
+  letter-spacing: 0;
+  line-height: 35px;
+  text-transform: none;
+  padding-bottom: 50px;
+}
+
+.more-about-me p:last-child {
+  margin-bottom: 0;
 }
