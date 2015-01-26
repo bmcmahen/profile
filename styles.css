@@ -921,11 +921,40 @@ p.caption {
   padding-bottom: 0;
 }
 
+
+@media handheld, only screen and (max-width: 450px) {
+  article {
+    padding-top: 235px;
+  }
+
+  .about .more-about-me {
+    padding: 0 25px;
+  }
+
+  .about .more-about-me p {
+    font-size: 14px;
+    line-height: 25px;
+  }
+
+  ul.grid {
+    padding-left: 10px;
+  }
+  
+}
+
 @media handheld, only screen and (max-width: 767px) {
   img.small-left {
     margin: 10px 0;
     width: 100%;
   }
+
+  .about p {
+    font-size: 22px;
+    padding: 0 15px;
+    margin: 15px auto;
+    letter-spacing: 2px;
+  }
+
 
   img.small-right {
     margin: 10px 0;
